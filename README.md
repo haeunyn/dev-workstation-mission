@@ -1,0 +1,134 @@
+# Dev Workstation Mission
+
+개발 워크스테이션 구축 실습 프로젝트입니다.  
+터미널 기본 명령, 파일 권한, Docker, Docker 볼륨, Git 설정을 실습하고 로그로 정리했습니다.
+
+## 프로젝트 구조
+
+- `app/index.html`: NGINX에서 제공할 HTML 파일
+- `Dockerfile`: 커스텀 NGINX 이미지 빌드 파일
+- `logs/`: 실습 과정과 실행 결과 기록
+- `screenshots/`: 브라우저 접속 결과 등 스크린샷 저장 위치
+
+## 실습 내용
+
+### 1. 터미널 기본 명령
+
+다음 명령을 실습했습니다.
+
+- `pwd`
+- `ls`
+- `mkdir`
+- `touch`
+- `cp`
+- `mv`
+- `rm`
+
+로그 파일:
+
+- `logs/terminal-basic.md`
+
+### 2. 파일 및 디렉토리 권한
+
+파일과 디렉토리에 권한을 적용하고 의미를 정리했습니다.
+
+- `755`
+- `700`
+- `644`
+
+로그 파일:
+
+- `logs/permission.md`
+
+### 3. Docker 기본 실습
+
+Docker 버전 확인, hello-world 실행, Ubuntu 컨테이너 실행을 실습했습니다.
+
+로그 파일:
+
+- `logs/docker-basic.md`
+- `logs/hello-world.md`
+- `logs/ubuntu-container.md`
+
+### 4. 커스텀 NGINX 이미지 빌드 및 실행
+
+`nginx:alpine` 이미지를 기반으로 커스텀 웹 서버 이미지를 빌드했습니다.
+
+실행 예시:
+
+```bash
+docker build -t workstation-web:1.0 .
+docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
+curl http://localhost:18080
+```
+
+로그 파일:
+
+- `logs/docker-build-run.md`
+- `logs/docker-operation.md`
+
+### 5. 바인드 마운트 검증
+
+호스트의 `app/index.html`을 컨테이너 내부 NGINX 웹 루트에 연결했습니다.  
+호스트 파일을 수정하면 컨테이너 웹 서버에 즉시 반영되는 것을 확인했습니다.
+
+로그 파일:
+
+- `logs/bind-mount.md`
+
+### 6. Docker 볼륨 영속성 검증
+
+첫 번째 컨테이너에서 Docker 볼륨에 데이터를 저장한 뒤 컨테이너를 삭제했습니다.  
+이후 두 번째 컨테이너에서 같은 볼륨을 연결하여 데이터가 유지되는 것을 확인했습니다.
+
+확인한 데이터:
+
+```text
+persistent-data```
+
+로그 파일:
+
+- `logs/docker-volume.md`
+
+### 7. Git 설정
+
+Git 사용자 정보와 기본 브랜치를 설정했습니다.
+
+로그 파일:
+
+- `logs/git-config.md`
+
+## 실행 방법
+
+이미지 빌드:
+
+```bash
+docker build -t workstation-web:1.0 .
+```
+
+컨테이너 실행:
+
+```bash
+docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
+```
+
+접속 확인:
+
+```bash
+curl http://localhost:18080
+```
+
+브라우저 접속:
+
+```text
+http://localhost:18080
+```
+
+## 배운 점
+
+- 터미널 명령으로 파일과 디렉토리를 관리하는 방법을 익혔습니다.
+- 파일 권한 숫자 표기법의 의미를 이해했습니다.
+- Docker 이미지와 컨테이너의 차이를 실습으로 확인했습니다.
+- 포트 매핑을 통해 컨테이너 웹 서버에 접속했습니다.
+- 바인드 마운트와 Docker 볼륨의 차이를 이해했습니다.
+- Git 설정과 커밋 과정을 실습했습니다.
