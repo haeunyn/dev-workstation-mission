@@ -76,7 +76,6 @@ curl http://localhost:18080
 
 - `logs/bind-mount.md`
 
-```markdown
 ### 6. Docker 볼륨 영속성 검증
 
 Docker 볼륨을 생성하고 첫 번째 컨테이너에서 데이터를 저장한 뒤, 컨테이너를 삭제했습니다.  
