@@ -76,15 +76,51 @@ curl http://localhost:18080
 
 - `logs/bind-mount.md`
 
+```markdown
 ### 6. Docker 볼륨 영속성 검증
 
-첫 번째 컨테이너에서 Docker 볼륨에 데이터를 저장한 뒤 컨테이너를 삭제했습니다.  
-이후 두 번째 컨테이너에서 같은 볼륨을 연결하여 데이터가 유지되는 것을 확인했습니다.
+Docker 볼륨을 생성하고 첫 번째 컨테이너에서 데이터를 저장한 뒤, 컨테이너를 삭제했습니다.  
+이후 같은 볼륨을 두 번째 컨테이너에 연결하여 데이터가 유지되는지 확인했습니다.
 
-확인한 데이터:
+볼륨 생성:
+
+```bash
+docker volume create workstation-volume
+docker volume ls
+```
+
+첫 번째 컨테이너에서 데이터 생성:
+
+```bash
+docker run --name volume-test -v workstation-volume:/data ubuntu bash -lc 'echo persistent-data > /data/message.txt && cat /data/message.txt'
+```
+
+실행 결과:
 
 ```text
-persistent-data```
+persistent-data
+```
+
+첫 번째 컨테이너 삭제:
+
+```bash
+docker rm volume-test
+```
+
+두 번째 컨테이너에서 데이터 유지 확인:
+
+```bash
+docker run --name volume-test-2 -v workstation-volume:/data ubuntu bash -lc 'cat /data/message.txt'
+```
+
+실행 결과:
+
+```text
+persistent-data
+```
+
+결과적으로 첫 번째 컨테이너를 삭제해도 Docker 볼륨에 저장된 데이터는 유지되었습니다.  
+이를 통해 컨테이너 생명주기와 데이터 저장소 생명주기가 분리된다는 것을 확인했습니다.
 
 로그 파일:
 
@@ -105,24 +141,20 @@ Git 사용자 정보와 기본 브랜치를 설정했습니다.
 ```bash
 docker build -t workstation-web:1.0 .
 ```
-
-컨테이너 실행:
-
-```bash
-docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
 ```
 
-접속 확인:
+---
 
-```bash
-curl http://localhost:18080
-```
+정리하면, 네가 작성한 내용의 방향은 맞습니다.  
+다만 `persistent-data``` `처럼 붙어 있으면 안 되고, 아래처럼 분리해야 합니다.
 
-브라우저 접속:
-
+```markdown
 ```text
-http://localhost:18080
+persistent-data
 ```
+```
+
+그리고 `docker build -t workstation-web:1.0 .` 명령어 뒤에도 코드블록을 닫는 ```가 있어야 합니다. 잘하고 있어요. Markdown 코드블록만 정리하면 됩니다.
 
 ## 배운 점
 
