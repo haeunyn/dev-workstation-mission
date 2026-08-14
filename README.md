@@ -140,7 +140,6 @@ Git 사용자 정보와 기본 브랜치를 설정했습니다.
 ```bash
 docker build -t workstation-web:1.0 .
 ```
-```
 
 ---
 
