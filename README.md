@@ -144,17 +144,6 @@ docker build -t workstation-web:1.0 .
 
 ---
 
-정리하면, 네가 작성한 내용의 방향은 맞습니다.  
-다만 `persistent-data``` `처럼 붙어 있으면 안 되고, 아래처럼 분리해야 합니다.
-
-```markdown
-```text
-persistent-data
-```
-```
-
-그리고 `docker build -t workstation-web:1.0 .` 명령어 뒤에도 코드블록을 닫는 ```가 있어야 합니다. 잘하고 있어요. Markdown 코드블록만 정리하면 됩니다.
-
 ## 배운 점
 
 - 터미널 명령으로 파일과 디렉토리를 관리하는 방법을 익혔습니다.
