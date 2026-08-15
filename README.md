@@ -182,8 +182,14 @@ persistent-data
 ### 1. 커스텀 NGINX 이미지 빌드
 ```bash
 docker build -t workstation-web:1.0 .
+```
+
+```bash
 docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
 curl http://localhost:18080
+```
+
+```bash
 docker stop workstation-web
 docker rm workstation-web
 ```
