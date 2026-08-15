@@ -86,15 +86,23 @@ Docker 데몬 동작 상태를 확인하고, 공식 테스트 이미지(`hello-w
 
 ### 4. 커스텀 NGINX 이미지 빌드 및 실행
 
-`nginx:alpine` 이미지를 기반으로 커스텀 웹 서버 이미지를 빌드했습니다.
+경량화된 `nginx:alpine` 베이스 이미지를 바탕으로 커스텀 HTML 파일을 포함하는 독자적인 웹 서버 이미지를 빌드하고, 포트 매핑을 통해 호스트에서 컨테이너 내부 웹 서비스에 접속하는 실습을 진행했습니다.
 
-실행 예시:
+* **Dockerfile 작성 및 이미지 빌드**:
+  * 호스트의 `app/index.html` 파일을 컨테이너 내부 NGINX 기본 웹 루트 경로(`/usr/share/nginx/html/index.html`)로 복사하도록 `Dockerfile`을 작성했습니다.
+  * `docker build -t workstation-web:1.0 .` 명령을 수행하여 커스텀 태그(`1.0`)를 가진 이미지를 빌드했습니다.
 
-```bash
-docker build -t workstation-web:1.0 .
-docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
-curl http://localhost:18080
-```
+* **컨테이너 백그라운드 실행 및 포트 매핑**:
+  * `docker run -d --name workstation-web -p 18080:80 workstation-web:1.0` 명령으로 컨테이너를 실행했습니다.
+  * `-d` (Detached 모드) 옵션으로 백그라운드에서 실행되도록 하고, `-p 18080:80` 포트 매핑을 적용하여 **호스트의 18080번 포트 요청을 컨테이너 내부 NGINX의 80번 포트로 포워딩**했습니다.
+
+* **서비스 응답 검증**:
+  * `curl http://localhost:18080` 및 브라우저 접속을 통해 NGINX가 커스텀 `app/index.html` 페이지를 정상적으로 응답하는지 확인했습니다.
+  * `docker logs workstation-web`으로 컨테이너 내부 NGINX 접속 및 접근 로그(Access Log)를 조회해 검증했습니다.
+
+> **💡 핵심 검증 내용**:  
+> - **포트 매핑(`-p 호스트:컨테이너`)**: 호스트 네트워크와 컨테이너 격리 네트워크 간의 통신 통로를 개설하는 포트 포워딩 원리를 이해했습니다.
+> - **레이어 기반 이미지 빌드**: Dockerfile의 각 명령(`FROM`, `COPY` 등)이 하나의 Read-Only 레이어로 추가되며 빌드 캐시(Build Cache)가 작동함을 확인했습니다.
 
 로그 파일:
 
