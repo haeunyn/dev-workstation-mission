@@ -60,7 +60,23 @@
 
 ### 3. Docker 기본 실습
 
-Docker 버전 확인, hello-world 실행, Ubuntu 컨테이너 실행을 실습했습니다.
+Docker 데몬 동작 상태를 확인하고, 공식 테스트 이미지(`hello-world`) 및 대중적인 대화형 OS 이미지(`ubuntu`)를 실행하며 Docker의 기본 동작 원리와 컨테이너 격리 구조를 검증했습니다.
+
+* **Docker 환경 확인**:
+  * `docker version`, `docker info` 명령을 통해 Docker 데몬이 정상 작동 중임을 확인했습니다.
+
+* **`hello-world` 컨테이너 실행**:
+  * `docker run hello-world` 명령을 실행했습니다.
+  * 로컬에 이미지가 없을 때 Docker Hub에서 자동으로 다운로드(`Unable to find image locally` -> `Pulling from library/hello-world`)하여 컨테이너를 생성/실행하고 종료되는 전체 흐름을 확인했습니다.
+
+* **`ubuntu` 컨테이너 상호작용(Interactive) 실습**:
+  * `docker run -it --name ubuntu-test ubuntu bash` 명령으로 우분투 컨테이너를 생성하고 터미널에 대화형으로 접속했습니다.
+  * 컨테이너 내부에서 `apt-get update`, `cat /etc/os-release` 등을 실행하여 호스트 OS와 완전히 격리된 독립적인 파일 시스템과 프로세스 공간을 가짐을 검증했습니다.
+  * `exit` 명령으로 터미널을 빠져나온 후, `docker ps -a`로 컨테이너의 상태(`Exited`)를 확인하고 `docker rm ubuntu-test`로 사용한 컨테이너를 정리했습니다.
+
+> **💡 핵심 검증 내용**:  
+> - **이미지(Image) vs 컨테이너(Container)**: 이미지는 읽기 전용(Read-Only) 템플릿이며, 컨테이너는 이 이미지 위에 격리된 실행 환경(Read-Write 레이어)이 얹어진 프로세스임을 확인했습니다.
+> - **`-it` 옵션의 의미**: `-i` (Interactive, Stdin 열기)와 `-t` (TTY, 가상 터미널 할당) 옵션을 함께 사용하여 컨테이너 내부 셸과 실시간으로 상호작용하는 방법을 익혔습니다.
 
 로그 파일:
 
