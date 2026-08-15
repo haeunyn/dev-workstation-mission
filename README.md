@@ -179,12 +179,13 @@ persistent-data
   
 ## 실행 방법
 
-이미지 빌드:
-
+### 1. 커스텀 NGINX 이미지 빌드
 ```bash
 docker build -t workstation-web:1.0 .
-```
-
+docker run -d --name workstation-web -p 18080:80 workstation-web:1.0
+curl http://localhost:18080
+docker stop workstation-web
+docker rm workstation-web
 ---
 
 ## 배운 점
