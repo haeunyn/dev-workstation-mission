@@ -169,12 +169,14 @@ persistent-data
 
 ### 7. Git 설정
 
-Git 사용자 정보와 기본 브랜치를 설정했습니다.
+커밋(Commit) 작성자 식별을 위한 사용자 정보 설정과, 표준 버전 관리 흐름에 맞춘 기본 브랜치 이름 변경 등 개발 환경 기본 Git 구성을 진행했습니다.
 
-로그 파일:
-
-- `logs/git-config.md`
-
+* **Git 사용자 정보(Identity) 설정**:
+  * 커밋 메타데이터에 기록될 이름과 이메일 주소를 글로벌(`--global`) 옵션으로 등록했습니다.
+  ```bash
+  git config --global user.name "사용자이름"
+  git config --global user.email "사용자이메일@example.com"
+  
 ## 실행 방법
 
 이미지 빌드:
